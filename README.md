@@ -1,6 +1,6 @@
 # IniParser
 
-A lightweight and simple to use INI parser written in c# for .NET core.
+A lightweight and simple to use INI parser written in C# for .NET standard.
 
 Capable of both read and write for modifing saved config.
 
@@ -10,7 +10,7 @@ Compling yourself: Use Visual Studio and the project file to create either a new
 
 ### Requires:
 
-This project is target for .NET core 2.1. It should be compliant with earlier and later versions of course, however when compiling with VS, one will have to change the project settings.
+This project is target for .NET standard 2.0. It should be compliant with earlier and later versions of course, however when compiling with VS, one will have to change the project settings.
 
 ### Installing
 

@@ -162,9 +162,7 @@ namespace INI
                     {
                         theDat.sections[i].Write(sw);
                     }
-                    sw.Close();
                 }
-                fs.Close();
             }
             return true;
         }
