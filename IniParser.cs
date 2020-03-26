@@ -145,7 +145,7 @@ namespace INI
     }
     public class IniParser
     {
-        private string fn = "gitpusher/config.ini";//default
+        private string fn = "config.ini";//default
         private IniDat theDat;
         public IniParser(string filename)
         {

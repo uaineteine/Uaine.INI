@@ -10,7 +10,7 @@ Compling yourself: Use Visual Studio and the project file to create either a new
 
 ### Requires:
 
-This project is target for .NET core 3. It should be compliant with earlier versions of course, however when compiling with VS, one will have to change the project settings.
+This project is target for .NET core 2.1. It should be compliant with earlier and later versions of course, however when compiling with VS, one will have to change the project settings.
 
 ### Installing
 
