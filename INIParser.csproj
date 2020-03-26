@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>INI</AssemblyName>
+    <RootNamespace>INI</RootNamespace>
   </PropertyGroup>
 
 </Project>
