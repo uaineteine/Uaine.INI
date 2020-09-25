@@ -32,4 +32,6 @@ dotnet publish -c release -r ubuntu.16.04-x64 --self-contained
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Copyright © 2020 Daniel Stamer-Squair

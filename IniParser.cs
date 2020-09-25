@@ -1,148 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace INI
 {
-    public class IniSec
-    {
-        public string SecName;
-        string[] LHS;
-        string[] RHS;
-        int n;
-        public IniSec(string sec, string[] l, string[] r)
-        {
-            SecName = makeSec(sec);
-            LHS = l;
-            RHS = r;
-            n = l.Length;
-        }
-        public IniSec(string sec, string[] lines)
-        {
-            SecName = makeSec(sec);
-            n = lines.Length;
-            LHS = new string[n];
-            RHS = new string[n];
-            for (int i = 0; i < n; i++)
-            {
-                SeperateKey(lines[i], out LHS[i], out RHS[i]);
-            }
-        }
-        public void Write(StreamWriter sw)
-        {
-            sw.WriteLine(IniSec.makeSec(SecName));
-            for (int i = 0; i < n; i++)
-            {
-                sw.WriteLine(LHS[i] + "=" + RHS[i]);
-            }
-        }
-        public string get(string key, out bool success)
-        {
-            success = false;
-            for (int i = 0; i < n; i++)
-            {
-                if (LHS[i] == key)
-                {
-                    success = true;
-                    return RHS[i];
-                }
-            }
-            return "";
-        }
-        public static string makeSec(string text)
-        {
-            //check if it isn't already a section
-            if (IsSec(text))
-                return text;//already fine
-            else
-                return "[" + text + "]";
-        }
-        public static bool IsSec(string text)
-        {
-            if (text[0] == '[' & text[text.Length - 1] == ']')
-                return true;
-            else
-                return false;
-        }
-        public static bool IsBlankLine(string text)
-        {
-            if (text == "")
-                return true;
-            else
-                return false;
-        }
-        public static bool SeperateKey(string line, out string l, out string r)
-        {
-            bool worked;
-            string[] split = line.Split('=');
-            l = "";
-            r = "";
-            if (split.Length > 1)//has it
-            {
-                worked = true;
-                l = split[0];
-                r = split[1];
-            }
-            else
-                worked = false;
-            return worked;
-        }
-
-        internal void Setkey(string curremotepre, string v)
-        {
-            for (int i = 0; i < n; i++)
-            {
-                if (LHS[i] == curremotepre)
-                    RHS[i] = v;
-            }
-        }
-    }
-    public class IniDat
-    {
-        public List<IniSec> sections;
-        public IniDat()
-        {
-            sections = new List<IniSec>();
-        }
-        public void addSec(string sec, string[] l, string[] r)
-        {
-            addSec(new IniSec(sec, l, r));
-        }
-        public void addSec(IniSec toAdd)
-        {
-            sections.Add(toAdd);
-        }
-        public string get(string sec, string key, out bool success)
-        {
-            success = false;
-            for (int i = 0; i < sections.Count; i++)
-            {
-                if (IniSec.makeSec(sections[i].SecName) == IniSec.makeSec(sec))
-                    return sections[i].get(key, out success);
-            }
-            return "";//else it didn't find it
-        }
-        public IniSec getSec(string sec)
-        {
-            for (int i = 0; i < sections.Count; i++)
-            {
-                if (IniSec.makeSec(sections[i].SecName) == IniSec.makeSec(sec))
-                    return sections[i];
-            }
-            return new IniSec("no sec", new string[1] { "nadah" });
-        }
-        public void SetKey(string mainsec, string curremotepre, string v)
-        {
-            int index = 0;
-            for (int i = 0; i < sections.Count; i++)
-            {
-                if (IniSec.makeSec(sections[i].SecName) == IniSec.makeSec(mainsec))
-                {
-                    index = i;
-                }
-            }
-            sections[index].Setkey(curremotepre, v);
-        }
-    }
     public class IniParser
     {
         private string fn = "config.ini";//default
@@ -182,7 +43,7 @@ namespace INI
             {
                 if (!IniSec.IsBlankLine(lines[i]))
                 {
-                    if (IniSec.IsSec(lines[i]) & lines[i]  != curSec)
+                    if (IniSec.IsSec(lines[i]) & lines[i] != curSec)
                     {
                         curSec = lines[i];
                         if (SecLines.Count > 0)
@@ -211,6 +72,45 @@ namespace INI
         public string getDatFromKey(string sec, string key, out bool success)
         {
             return theDat.get(sec, key, out success);
+        }
+
+        public bool getBoolFromKey(string sec, string key, out bool success)
+        {
+            string res = getDatFromKey(sec, key, out success);
+            if (success == true)
+            {
+                return Convert.ToBoolean(res);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int getIntFromKey(string sec, string key, out bool success)
+        {
+            string res = getDatFromKey(sec, key, out success);
+            if (success == true)
+            {
+                return Convert.ToInt32(res);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public float getFloatFromKey(string sec, string key, out bool success)
+        {
+            string res = getDatFromKey(sec, key, out success);
+            if (success == true)
+            {
+                return Convert.ToSingle(res);
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
