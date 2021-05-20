@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Uaine.IO;
 
 namespace INI
 {
-    public class IniParser
+    public class IniParser : FileData
     {
-        private string fn = "config.ini";//default
         private IniDat theDat;
-        public IniParser(string filename)
+        public IniParser(string filename) : base(filename)
         {
-            fn = filename;
             theDat = new IniDat();
         }
         public bool Save()
         {
-            using (FileStream fs = new FileStream(fn, FileMode.Create))
+            using (FileStream fs = new FileStream(Filename, FileMode.Create))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
@@ -35,17 +34,17 @@ namespace INI
 
         public bool Read()
         {
-            bool worked = File.Exists(fn);
-            string[] lines = File.ReadAllLines(fn);
+            bool worked = File.Exists(Filename);
+            LoadAllLines();
             string curSec = "";
             List<string> SecLines = new List<string>();
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < Lines.Length; i++)
             {
-                if (!IniSec.IsBlankLine(lines[i]))
+                if (!IniSec.IsBlankLine(Lines[i]))
                 {
-                    if (IniSec.IsSec(lines[i]) & lines[i] != curSec)
+                    if (IniSec.IsSec(Lines[i]) & Lines[i] != curSec)
                     {
-                        curSec = lines[i];
+                        curSec = Lines[i];
                         if (SecLines.Count > 0)
                         {
                             //new section so append the last bits
@@ -56,7 +55,7 @@ namespace INI
                     }
                     else
                     {
-                        SecLines.Add(lines[i]);
+                        SecLines.Add(Lines[i]);
                     }
                 }
             }

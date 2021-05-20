@@ -2,10 +2,28 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>INI</AssemblyName>
-    <RootNamespace>INI</RootNamespace>
+    <AssemblyName>Uaine.INI</AssemblyName>
+    <RootNamespace>Uaine.INI</RootNamespace>
     <Authors>Daniel Stamer-Squair</Authors>
-    <Copyright>Copyright © 2020 Daniel Stamer-Squair</Copyright>
+    <Copyright>Copyright © 2020-2021 Daniel Stamer-Squair</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>ini.png</PackageIcon>
+    <Version>2.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Uaine.IO" Version="0.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon\ini.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
